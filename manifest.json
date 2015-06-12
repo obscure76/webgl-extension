@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Sample of WebGL",
+  "name": "3D viewer",
   "version": "2",
   "minimum_chrome_version": "23",
   "icons": {
-    "128": "icon_128.png"
+    "128": "IronMan.png"
   },
   "app": {
     "background": {

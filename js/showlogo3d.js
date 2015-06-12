@@ -106,7 +106,7 @@ OrbitControls = function(object, domElement) {
 
     // angle from y-axis
 
-    var phi = Math.atan2(Math.sqrt(offset.x * offset.x + offset.z * offset.z), offset.y);
+    var phi = Math.atan2(Math.sqrt(offset.x * offset.x+ offset.z * offset.z), offset.y);
 
     if (this.autoRotate) {
       this.rotateLeft(getAutoRotationAngle());
@@ -235,12 +235,13 @@ OrbitControls = function(object, domElement) {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (!Detector.webgl) Detector.addGetWebGLMessage();
+    if (!Detector.webgl) 
+        Detector.addGetWebGLMessage();
 
     var SCREEN_WIDTH = window.innerWidth;
     var SCREEN_HEIGHT = window.innerHeight;
     var FLOOR = 0;
-
+    console.log(window.innerHeight, window.innerWidth);
     var container;
 
     //var camera, scene, controls;
@@ -281,10 +282,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // lights
       var ambient = new THREE.AmbientLight(0xffffff);
-      scene.add(ambient);
+      //scene.add(ambient);
 
       // more lights
-      var directionalLight = new THREE.DirectionalLight(0xffeedd);
+      var directionalLight = new THREE.DirectionalLight(0xaaeedd);
       directionalLight.position.set(0, -70, 100).normalize();
       scene.add(directionalLight);
 
@@ -296,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // load ascii model
       var jsonLoader = new THREE.JSONLoader();
-      jsonLoader.load("obj/html5rocks.js", function(geometry) { createScene(geometry) });
+      jsonLoader.load("obj/IronMan.js", function(geometry) { createScene(geometry) });
 
       controls = new OrbitControls(camera, container);
       controls.autoRotate = true;
@@ -355,4 +356,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+function IronMan() {
+    console.log("IronMan called");
+}
 
