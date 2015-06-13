@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', function() {
       scene = new THREE.Scene();
 
       // lights
-      var ambient = new THREE.AmbientLight(0xffffff);
-      //scene.add(ambient);
+      var ambient = new THREE.AmbientLight(0x000040);
+      scene.add(ambient);
 
       // more lights
       var directionalLight = new THREE.DirectionalLight(0xaaeedd);
