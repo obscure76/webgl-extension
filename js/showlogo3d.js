@@ -18,7 +18,7 @@ OrbitControls = function(object, domElement) {
   this.userRotateSpeed = 1.0;
 
   this.autoRotate = false;
-  this.autoRotateSpeed = 5.0; // 30 seconds per round when fps is 60
+  this.autoRotateSpeed = 0.0; // 30 seconds per round when fps is 60
 
   // internals
 
@@ -203,6 +203,13 @@ OrbitControls = function(object, domElement) {
       zoomStart.copy(zoomEnd);
     }
   }
+    
+  function rotateSpeedControl() {
+      if(this.autoRotateSpeed == 0.0)
+          this.autoRotateSpeed = 3.0;
+      else
+          this.autoRotateSpeed = 0.0;
+  }
 
   function onMouseUp(event) {
     if (!scope.userRotate) return;
@@ -241,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var SCREEN_WIDTH = window.innerWidth;
     var SCREEN_HEIGHT = window.innerHeight;
     var FLOOR = 0;
-    console.log(window.innerHeight, window.innerWidth);
     var container;
 
     //var camera, scene, controls;
@@ -260,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
 
       var closeEl=document.querySelector(".close");
-      console.log(closeEl);
       if (closeEl) {
         closeEl.addEventListener('click', function() {
           window.close();
@@ -269,10 +274,22 @@ document.addEventListener('DOMContentLoaded', function() {
           e.stopPropagation();
         });
       };
+      
+      var autoRotateEl = document.getElementById("rot");
+      autoRotateEl.addEventListener('click', function() {
+        if(controls.autoRotateSpeed == 0.0)
+          controls.autoRotateSpeed = 3.0;
+        else
+          controls.autoRotateSpeed = 0.0;
+      });
 
+      var rangeEL = document.getElementById("myRange");
+      rangeEL.addEventListener('change', function() {
+          console.log(rangeEL.value);
+          controls.autoRotateSpeed = rangeEL.value;
+      });
       container = document.createElement('div');
       document.body.appendChild(container);
-
       // camera
       camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 100000);
       camera.position.z = 75;
@@ -301,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       controls = new OrbitControls(camera, container);
       controls.autoRotate = true;
+      rangeEL.value = controls.autoRotateSpeed = 3.0;
     }
 
     function createScene(geometry) {
