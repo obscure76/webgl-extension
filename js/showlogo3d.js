@@ -43,6 +43,7 @@ OrbitControls = function(object, domElement) {
 
   var STATE = { NONE : -1, ROTATE : 0, ZOOM : 1 };
   var state = STATE.NONE;
+  var ongoingTouches = new Array();
 
   // events
 
@@ -226,6 +227,17 @@ OrbitControls = function(object, domElement) {
     document.exitPointerLock();
   }
 
+  function touchHandler(event) {
+    var touches = event.changedTouches;
+
+    for(var i=0; i < event.changedTouches.length; i++) {
+        var touchId = event.changedTouches[i].identifier;
+        var x       = event.changedTouches[i].pageX;
+        var y       = event.changedTouches[i].pageY;
+    }
+
+  }
+    
   function onMouseWheel(event) {
     if (!scope.userZoom) return;
 
@@ -235,10 +247,47 @@ OrbitControls = function(object, domElement) {
       scope.zoomIn();
     }
   }
+  
+  function handleStart(event) {
+      event.preventDefault();
+      var el =  this.domElement;
+      var ctx = el.getContext("2D");
+      var touches = event.changedTouches;
+      for (var i=0; i < touches.length; i++) {
+        log("touchstart:"+i+"...");
+        ongoingTouches.push(copyTouch(touches[i]));
+        var color = colorForTouch(touches[i]);
+        ctx.beginPath();
+        ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0,2*Math.PI, false);  // a circle at the start
+        ctx.fillStyle = color;
+        ctx.fill();
+        log("touchstart:"+i+".");
+    }
+  }
+    
+  function handleEnd(event) {
+  }
+  
+  function handleStart(event) {
+  }
+    
+  function handleEnd(event) {
+  } 
+  
+  function handleCancel(event) {
+  }
+
+  function handleMove(event) {
+  }
 
   this.domElement.addEventListener('contextmenu', function(event) { event.preventDefault(); }, false);
   this.domElement.addEventListener('mousedown', onMouseDown, false);
   this.domElement.addEventListener('mousewheel', onMouseWheel, false);
+  this.domElement.addEventListener("touchstart", handleStart, false);
+  this.domElement.addEventListener("touchend", handleEnd, false);
+  this.domElement.addEventListener("touchcancel", handleCancel, false);
+  this.domElement.addEventListener("touchleave", handleEnd, false);
+  this.domElement.addEventListener("touchmove", handleMove, false);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
