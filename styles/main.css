@@ -1,5 +1,6 @@
 body {
-  background: black;
+  background-color: black;
+  text-decoration-color: aliceblue;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -7,6 +8,7 @@ body {
 
 .close {
   background-image: url('../img/button_close.png');
+  background-color: black;
   background-repeat: no-repeat;
   position: absolute;
   top: 5px;
@@ -25,3 +27,28 @@ body {
   background-image: url('../img/button_close_hover.png');
 }
 
+.input[type=range], ::-moz-range-track, ::-ms-track {
+	-webkit-appearance: none;
+	background-color: #ecf0f1;
+	border: 1px solid #bdc3c7;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+    
+.spin {
+    background-color: blue;
+    color: azure;
+    top: 15px;
+    left: 25px;
+    width: 25px;
+}
+
+::-webkit-slider-thumb, ::-moz-range-thumb, ::-ms-thumb {{
+-webkit-appearance: none;
+background-color: #666;
+width: 10px;
+height: 20px;
+}}
